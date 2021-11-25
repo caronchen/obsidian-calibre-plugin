@@ -1,3 +1,5 @@
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/caronchen/obsidian-calibre-plugin) ![GitHub all releases](https://img.shields.io/github/downloads/caronchen/obsidian-calibre-plugin/total) ![GitHub Release Date](https://img.shields.io/github/release-date/caronchen/obsidian-calibre-plugin) ![GitHub last commit](https://img.shields.io/github/last-commit/caronchen/obsidian-calibre-plugin)
+
 # Obsidian Calibre Plugin
 
 This is a calibre Content server plugin for [Obsidian](https://obsidian.md). Allow you to access your calibre libraries and read books directly in Obsidian.
