@@ -1,14 +1,14 @@
 {
 	"name": "obsidian-calibre-plugin",
-	"version": "0.12.0",
-	"description": "This is a calibre plugin for Obsidian (https://obsidian.md)",
-	"main": "main.js",
+	"version": "1.0.0",
+	"description": "This plugin allows you to access your calibre libraries and read books directly in Obsidian.",
+	"main": "src/main.js",
 	"scripts": {
 		"dev": "node esbuild.config.mjs",
 		"build": "node esbuild.config.mjs production"
 	},
-	"keywords": [],
-	"author": "",
+	"keywords": ["calibre", "obsidian", "obsidian-plugin"],
+	"author": "caronchen",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
