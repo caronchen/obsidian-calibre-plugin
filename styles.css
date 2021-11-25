@@ -1,4 +1,32 @@
-/* Sets all the text color to red! */
-body {
-    color: red;
+.calibre-donation {
+	width: fit-content;
+	margin: 25px auto;
+	text-align: center;
+	position: absolute;
+	left: 200px;
+	right: 0;
+	bottom: 0;
+}
+
+.calibre-donation a.paypal {
+	display: inline-block;
+}
+
+.calibre-container {
+	position: relative;
+	overflow: hidden;
+	padding-top: 60%;
+}
+
+.calibre-container iframe {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	border: 0;
+}
+
+div.nav-file > div.nav-file-title[data-path="@CalibreContentServer.md"] {
+	display: none;
 }

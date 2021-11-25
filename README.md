@@ -1,68 +1,41 @@
-## Obsidian Sample Plugin
+# Obsidian Calibre Plugin
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+This is a calibre Content server plugin for Obsidian (https://obsidian.md).
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+- [Obsidian Calibre Plugin](#obsidian-calibre-plugin)
+  - [How to use](#how-to-use)
+    - [Start quickly](#start-quickly)
+      - [STEP 1：Start Content Server](#step-1start-content-server)
+      - [STEP 2：Install Calibre Plugin](#step-2install-calibre-plugin)
+      - [STEP 3：Open Calibre Container](#step-3open-calibre-container)
+    - [How to Change Content Server Port](#how-to-change-content-server-port)
+      - [Change in Calibre Application](#change-in-calibre-application)
+      - [Change in Calibre Plugin](#change-in-calibre-plugin)
+  - [Manually installing the plugin](#manually-installing-the-plugin)
+  - [The calibre Content server](#the-calibre-content-server)
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+## How to use
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+### Start quickly
+#### STEP 1：Start Content Server
+To start the server, click the Connect/share button and choose Start Content server.
 
-### First time developing plugins?
+#### STEP 2：Install Calibre Plugin
+Just do it.
 
-Quick starting guide for new plugin devs:
+#### STEP 3：Open Calibre Container
+Click the ribbon icon to open Calibre Container.
 
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+### How to Change Content Server Port
 
-### Releasing new releases
+#### Change in Calibre Application
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+#### Change in Calibre Plugin
 
-### Adding your plugin to the community plugin list
+## Manually installing the plugin
 
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
+- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-calibre-plugin/`.
 
-### How to use
+## The calibre Content server
 
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
-
-### Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-### Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-
-### API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+See https://manual.calibre-ebook.com/server.html
