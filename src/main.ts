@@ -21,6 +21,16 @@ export default class CalibrePlugin extends Plugin {
 					state: { file: calibre.path, mode: 'preview' }
 				});
 			});
+
+			this.app.workspace.onLayoutReady(() => {
+				this.app.workspace.getLeavesOfType('markdown')
+					.filter((leaf) => leaf.getViewState().state.file == CALIBRE_CONTAINER_FILE_PATH)
+					.forEach((leaf) => {
+						const state = leaf.getViewState();
+						state.state.mode = 'preview';
+						leaf.setViewState(state);
+					});
+			});
 			
 			this.registerEvent(this.app.metadataCache.on('resolved', () => {
 				this.createCalibreContainerFile();
