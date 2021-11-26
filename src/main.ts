@@ -2,7 +2,7 @@ import { addIcon, Plugin, TFile } from 'obsidian';
 import { CalibrePluginSettings, CalibreSettingTab, DEFAULT_SETTINGS } from './settings';
 import { calibreContainer, CALIBRE_ICON_ID, CALIBRE_ICON_SVG } from './tools';
 
-const CALIBRE_CONTAINER_FILE_NAME = '@CalibreContentServer';
+const CALIBRE_CONTAINER_FILE_NAME = 'CALIBRE';
 const CALIBRE_CONTAINER_FILE_PATH = `${CALIBRE_CONTAINER_FILE_NAME}.md`;
 
 export default class CalibrePlugin extends Plugin {

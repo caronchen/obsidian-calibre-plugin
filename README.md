@@ -3,16 +3,16 @@
 This is a calibre Content server plugin for [Obsidian](https://obsidian.md). Allow you to access your calibre libraries and read books directly in Obsidian.
 
 - [Obsidian Calibre Plugin](#obsidian-calibre-plugin)
-  - [How to use](#how-to-use)
-    - [Start quickly](#start-quickly)
-      - [STEP 1：Start Content Server](#step-1start-content-server)
-      - [STEP 2：Install Calibre Plugin](#step-2install-calibre-plugin)
-      - [STEP 3：Open Calibre Container](#step-3open-calibre-container)
-    - [How to Change Content Server Port](#how-to-change-content-server-port)
-      - [Change in Calibre Application](#change-in-calibre-application)
-      - [Change in Calibre Plugin](#change-in-calibre-plugin)
-  - [Manually installing the plugin](#manually-installing-the-plugin)
-  - [The calibre Content server](#the-calibre-content-server)
+	- [How to use](#how-to-use)
+		- [Start quickly](#start-quickly)
+			- [STEP 1：Start Content Server](#step-1start-content-server)
+			- [STEP 2：Install Calibre Plugin](#step-2install-calibre-plugin)
+			- [STEP 3：Open Calibre Container](#step-3open-calibre-container)
+		- [How to Change Content Server Port](#how-to-change-content-server-port)
+			- [Change in Calibre Application](#change-in-calibre-application)
+			- [Change in Calibre Plugin](#change-in-calibre-plugin)
+	- [Manually installing the plugin](#manually-installing-the-plugin)
+	- [The calibre Content server](#the-calibre-content-server)
 
 ## How to use
 
