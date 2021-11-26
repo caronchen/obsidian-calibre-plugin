@@ -24,7 +24,7 @@ export default class CalibrePlugin extends Plugin {
 
 			this.app.workspace.onLayoutReady(() => {
 				this.app.workspace.getLeavesOfType('markdown')
-					.filter((leaf) => leaf.getViewState().state.file == CALIBRE_CONTAINER_FILE_PATH)
+					.filter((leaf) => leaf.getViewState().state?.file == CALIBRE_CONTAINER_FILE_PATH)
 					.forEach((leaf) => {
 						const state = leaf.getViewState();
 						state.state.mode = 'preview';
@@ -44,13 +44,7 @@ export default class CalibrePlugin extends Plugin {
 		if (await this.app.vault.adapter.exists(CALIBRE_CONTAINER_FILE_PATH)) {
 			return this.app.vault.getAbstractFileByPath(CALIBRE_CONTAINER_FILE_PATH) as TFile;
 		}
-
-		const calibre: TFile = await (this.app.fileManager as any).createNewMarkdownFile(
-			this.app.fileManager.getNewFileParent(''),
-			CALIBRE_CONTAINER_FILE_NAME
-		);
-		this.app.vault.modify(calibre, calibreContainer(this.settings.address));
-		return calibre;
+		return this.app.vault.create(CALIBRE_CONTAINER_FILE_PATH, calibreContainer(this.settings.address));
 	}
 
 	async loadSettings() {
