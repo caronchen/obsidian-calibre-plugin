@@ -7,6 +7,7 @@ export interface CalibrePluginSettings {
 	address: string;
 }
 
+export const SERVER_ADDRESS_CHANGED = 'server-address-changed';
 export const DEFAULT_SETTINGS: CalibrePluginSettings = {
 	address: 'http://localhost:8080',
 }
@@ -23,7 +24,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 		containerEl.createEl('h2', { text: 'Calibre Settings' });
 
 		new Setting(containerEl)
-			.setName("Address")
+			.setName("Server Address")
 			.setDesc("The address of calibre Content server.")
 			.addText(text => {
 				text.inputEl.size = 25;
@@ -32,7 +33,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.address)
 					.onChange(async (value) => {
 						this.plugin.settings.address = value;
-						await this.plugin.saveSettings();
+						await this.plugin.saveSettings(SERVER_ADDRESS_CHANGED);
 					});
 			});
 
