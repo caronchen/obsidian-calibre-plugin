@@ -49,7 +49,7 @@ Click the ribbon icon to open Calibre Container.
 ![image](https://user-images.githubusercontent.com/150803/143490977-89e98839-0861-44c5-a002-b855a26f00ae.png)
 
 ## How it Works
-Calibre plugin will create a `CALIBRE.md` file in your vault root when the plugin is loaded, and keep the file always existing by listening for the `resolved` event of `metadataCache`. So, it is important to note that you cannot create a file with the same name.
+Calibre plugin will create a `CALIBRE.md` file in your vault root when the plugin is loaded, and keep the file always existing by listening for the `resolved` event of `metadataCache`. So, it is important to note that you cannot create a file with the same name (case insensitive).
 
 `CALIBRE.md` is hidden by CSS rules in File explorer. `CALIBRE.md` file contains an iframe to connect to the content server. You can change the server address in plugin settings.
 

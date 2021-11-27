@@ -22,10 +22,12 @@ export default class CalibrePlugin extends Plugin {
 
 			this.addRibbonIcon(CALIBRE_ICON_ID, 'Calibre', (event: MouseEvent) => {
 				const calibre = this.app.vault.getAbstractFileByPath(CALIBRE_CONTAINER_FILE_PATH);
-				this.app.workspace.getLeaf(true).setViewState({
-					type: 'markdown',
-					state: { file: calibre.path, mode: 'preview' }
-				});
+				if (calibre != null) {
+					this.app.workspace.getLeaf(true).setViewState({
+						type: 'markdown',
+						state: { file: calibre.path, mode: 'preview' }
+					});
+				}
 			});
 
 			this.app.workspace.onLayoutReady(() => {
