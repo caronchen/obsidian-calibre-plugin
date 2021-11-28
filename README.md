@@ -5,6 +5,7 @@
 This is a calibre Content server plugin for [Obsidian](https://obsidian.md). Allow you to access your calibre libraries and read books directly in Obsidian. Rearrange a comfortable layout of the workspace, you can take notes while reading, and read more books at the same time by opening more panes.
 
 - [Obsidian Calibre Plugin](#obsidian-calibre-plugin)
+	- [How it Works](#how-it-works)
 	- [How to use](#how-to-use)
 		- [Start quickly](#start-quickly)
 			- [STEP 1: Start Content Server](#step-1-start-content-server)
@@ -13,9 +14,13 @@ This is a calibre Content server plugin for [Obsidian](https://obsidian.md). All
 		- [How to Change Content Server Port](#how-to-change-content-server-port)
 			- [Change in Calibre Application](#change-in-calibre-application)
 			- [Change in Calibre Plugin](#change-in-calibre-plugin)
-	- [How it Works](#how-it-works)
 	- [Manually installing the plugin](#manually-installing-the-plugin)
 	- [The calibre Content server](#the-calibre-content-server)
+
+## How it Works
+Calibre plugin will create a `@CALIBRE.Container.md` file in your vault root when you click Calibre ribbon icon or change the server address in plugin settings. So, it is important to note that you cannot create a file with the same name (case insensitive). If you do, the plugin will not work properly.
+
+`@CALIBRE.Container.md` is hidden by CSS rules in File explorer. `@CALIBRE.Container.md` file contains an iframe to connect to the content server. You can change the server address in plugin settings.
 
 ## How to use
 
@@ -48,14 +53,9 @@ Click the ribbon icon to open Calibre Container.
 #### Change in Calibre Plugin
 ![image](https://user-images.githubusercontent.com/150803/143490977-89e98839-0861-44c5-a002-b855a26f00ae.png)
 
-## How it Works
-Calibre plugin will create a `CALIBRE.md` file in your vault root when the plugin is loaded, and keep the file always existing by listening for the `resolved` event of `metadataCache`. So, it is important to note that you cannot create a file with the same name (case insensitive).
-
-`CALIBRE.md` is hidden by CSS rules in File explorer. `CALIBRE.md` file contains an iframe to connect to the content server. You can change the server address in plugin settings.
-
 ## Manually installing the plugin
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-calibre-plugin/`.
+- Copy over `main.js`, `styles.css`, `manifest.json` from [Releases](https://github.com/caronchen/obsidian-calibre-plugin/releases) to your vault `VaultFolder/.obsidian/plugins/obsidian-calibre-plugin/`.
 
 ## The calibre Content server
 

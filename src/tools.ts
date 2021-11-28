@@ -1,5 +1,10 @@
+export const CALIBRE_CONTAINER_FILE_IDENTIFIER = 'THIS IS A GENERATED CALIBRE CONTAINER FILE BY CALIBRE PLUGIN. DO NOT EDIT.';
+
 export function calibreContainer(address: string): string {
-	return `<div class="calibre-container"><iframe src="${address}"></iframe></div>`;
+	return `<!--
+${CALIBRE_CONTAINER_FILE_IDENTIFIER}
+-->
+<div class="calibre-container"><iframe src="${address}"></iframe></div>`;
 }
 
 export const CALIBRE_ICON_ID = "calibre";

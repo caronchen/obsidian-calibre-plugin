@@ -1,8 +1,8 @@
 import { addIcon, Plugin, TFile } from 'obsidian';
 import { CalibrePluginSettings, CalibreSettingTab, SERVER_ADDRESS_CHANGED, DEFAULT_SETTINGS } from './settings';
-import { calibreContainer, CALIBRE_ICON_ID, CALIBRE_ICON_SVG } from './tools';
+import { calibreContainer, CALIBRE_CONTAINER_FILE_IDENTIFIER, CALIBRE_ICON_ID, CALIBRE_ICON_SVG } from './tools';
 
-const CALIBRE_CONTAINER_FILE_NAME = 'CALIBRE';
+const CALIBRE_CONTAINER_FILE_NAME = '@CALIBRE.Container';
 const CALIBRE_CONTAINER_FILE_PATH = `${CALIBRE_CONTAINER_FILE_NAME}.md`;
 
 declare module 'obsidian' {
@@ -20,8 +20,8 @@ export default class CalibrePlugin extends Plugin {
 			this.addSettingTab(new CalibreSettingTab(this.app, this));
 			addIcon(CALIBRE_ICON_ID, CALIBRE_ICON_SVG);
 
-			this.addRibbonIcon(CALIBRE_ICON_ID, 'Calibre', (event: MouseEvent) => {
-				const calibre = this.app.vault.getAbstractFileByPath(CALIBRE_CONTAINER_FILE_PATH);
+			this.addRibbonIcon(CALIBRE_ICON_ID, 'Calibre', async (event: MouseEvent) => {
+				const calibre = await this.createOrGetCalibreContainerFile();
 				if (calibre != null) {
 					this.app.workspace.getLeaf(true).setViewState({
 						type: 'markdown',
@@ -31,18 +31,15 @@ export default class CalibrePlugin extends Plugin {
 			});
 
 			this.app.workspace.onLayoutReady(() => {
+				const upperCasePath = CALIBRE_CONTAINER_FILE_PATH.toUpperCase();
 				this.app.workspace.getLeavesOfType('markdown')
-					.filter((leaf) => leaf.getViewState().state?.file == CALIBRE_CONTAINER_FILE_PATH)
-					.forEach((leaf) => {
+					.filter(leaf => (leaf.getViewState().state?.file as string).toUpperCase() == upperCasePath)
+					.forEach(leaf => {
 						const state = leaf.getViewState();
 						state.state.mode = 'preview';
 						leaf.setViewState(state);
 					});
 			});
-			
-			this.registerEvent(this.app.metadataCache.on('resolved', () => {
-				this.createCalibreContainerFile();
-			}));
 
 			this.registerEvent(this.app.vault.on(`calibre:${SERVER_ADDRESS_CHANGED}`, () => {
 				this.changeServerAddress();
@@ -52,17 +49,23 @@ export default class CalibrePlugin extends Plugin {
 		}
 	}
 	
-	async createCalibreContainerFile(): Promise<TFile> {
-		if (await this.app.vault.adapter.exists(CALIBRE_CONTAINER_FILE_PATH)) {
-			return this.app.vault.getAbstractFileByPath(CALIBRE_CONTAINER_FILE_PATH) as TFile;
+	async createOrGetCalibreContainerFile(): Promise<TFile> {
+		if (await this.app.vault.adapter.exists(CALIBRE_CONTAINER_FILE_PATH, false)) {
+			return this.app.vault.getRoot().children
+				.filter(file => file instanceof TFile)
+				.filter(file => file.name.toUpperCase() == CALIBRE_CONTAINER_FILE_PATH.toUpperCase())
+				.first() as TFile;
 		}
 		return this.app.vault.create(CALIBRE_CONTAINER_FILE_PATH, calibreContainer(this.settings.address));
 	}
 	
 	async changeServerAddress(): Promise<void> {
-		if (await this.app.vault.adapter.exists(CALIBRE_CONTAINER_FILE_PATH)) {
-			const file = this.app.vault.getAbstractFileByPath(CALIBRE_CONTAINER_FILE_PATH) as TFile;
-			await this.app.vault.modify(file, calibreContainer(this.settings.address));
+		const calibre = await this.createOrGetCalibreContainerFile();
+		const content = await this.app.vault.read(calibre);
+		if (content.contains(CALIBRE_CONTAINER_FILE_IDENTIFIER)) {
+			await this.app.vault.modify(calibre, calibreContainer(this.settings.address));
+		} else {
+			console.error('INVALID CALIBRE CONTAINER FILE FOUND.');
 		}
 	}
 

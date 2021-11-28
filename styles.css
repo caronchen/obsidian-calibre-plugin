@@ -27,6 +27,6 @@
 	border: 0;
 }
 
-div.nav-file > div.nav-file-title[data-path="CALIBRE.md"] {
+div.nav-file > div.nav-file-title[data-path="@CALIBRE.Container.md" i] {
 	display: none;
 }
