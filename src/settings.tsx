@@ -5,11 +5,16 @@ import * as ReactDOM from 'react-dom';
 
 export interface CalibrePluginSettings {
 	address: string;
+	containerHeight: string;
+	autoContainerHeight: boolean;
 }
 
 export const SERVER_ADDRESS_CHANGED = 'server-address-changed';
+export const CONTAINER_HEIGHT_CHANGED = 'container-height-changed';
 export const DEFAULT_SETTINGS: CalibrePluginSettings = {
-	address: 'http://localhost:8080',
+	address: "http://localhost:8080",
+	containerHeight: "90%",
+	autoContainerHeight: true,
 }
 
 export class CalibreSettingTab extends PluginSettingTab {
@@ -29,11 +34,36 @@ export class CalibreSettingTab extends PluginSettingTab {
 			.addText(text => {
 				text.inputEl.size = 25;
 				text
-					.setPlaceholder("http://localhost:8080")
+					.setPlaceholder(DEFAULT_SETTINGS.address)
 					.setValue(this.plugin.settings.address)
 					.onChange(async (value) => {
 						this.plugin.settings.address = value;
 						await this.plugin.saveSettings(SERVER_ADDRESS_CHANGED);
+					});
+			});
+
+		new Setting(containerEl)
+			.setName("Auto Container Height")
+			.setDesc("When toggle on, Container Height will be ignored.")
+			.addToggle(toggle => {
+				toggle
+					.setValue(this.plugin.settings.autoContainerHeight)
+					.onChange(async (value) => {
+						this.plugin.settings.autoContainerHeight = value;
+						await this.plugin.saveSettings(CONTAINER_HEIGHT_CHANGED);
+					});
+			});
+
+		new Setting(containerEl)
+			.setName("Container Height")
+			.setDesc("Change default height of the container, percent or height with a valid CSS unit. e.g., 90%, 860px.")
+			.addText(text => {
+				text
+					.setPlaceholder(DEFAULT_SETTINGS.containerHeight)
+					.setValue(this.plugin.settings.containerHeight)
+					.onChange(async (value) => {
+						this.plugin.settings.containerHeight = value;
+						await this.plugin.saveSettings(CONTAINER_HEIGHT_CHANGED);
 					});
 			});
 
