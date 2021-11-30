@@ -35,19 +35,19 @@ export default class CalibrePlugin extends Plugin {
 			});
 
 			this.app.workspace.onLayoutReady(() => {
-				this.previewCalibreContainer();
+				this.autoStylePreviewCalibreContainer(true);
 			});
 
 			this.registerEvent(this.app.workspace.on('resize', () => {
-				this.previewCalibreContainer();
+				this.autoStylePreviewCalibreContainer();
 			}));
 
 			this.registerEvent(this.app.workspace.on('layout-change', () => {
-				this.previewCalibreContainer();
+				this.autoStylePreviewCalibreContainer();
 			}));
 
 			this.registerEvent(this.app.workspace.on(`calibre:${CONTAINER_HEIGHT_CHANGED}`, () => {
-				this.previewCalibreContainer();
+				this.autoStylePreviewCalibreContainer();
 			}));
 
 			this.registerEvent(this.app.vault.on(`calibre:${SERVER_ADDRESS_CHANGED}`, () => {
@@ -58,14 +58,16 @@ export default class CalibrePlugin extends Plugin {
 		}
 	}
 
-	previewCalibreContainer(): void {
+	autoStylePreviewCalibreContainer(autoPreview?: boolean): void {
 		const upperCasePath = CALIBRE_CONTAINER_FILE_PATH.toUpperCase();
 		this.app.workspace.getLeavesOfType('markdown')
 			.filter(leaf => (leaf.getViewState().state?.file as string).toUpperCase() == upperCasePath)
 			.forEach(leaf => {
-				const state = leaf.getViewState();
-				state.state.mode = 'preview';
-				leaf.setViewState(state);
+				if (autoPreview) {
+					const state = leaf.getViewState();
+					state.state.mode = 'preview';
+					leaf.setViewState(state);
+				}
 
 				let height = this.settings.containerHeight;
 				if (this.settings.autoContainerHeight) {
