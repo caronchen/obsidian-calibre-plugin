@@ -18,9 +18,7 @@ This is a calibre Content server plugin for [Obsidian](https://obsidian.md). All
 	- [The calibre Content server](#the-calibre-content-server)
 
 ## How it Works
-Calibre plugin will create a `@CALIBRE.Container.md` file in your vault root when you click Calibre ribbon icon or change the server address in plugin settings. So, it is important to note that you cannot create a file with the same name (case insensitive). If you do, the plugin will not work properly.
-
-`@CALIBRE.Container.md` is hidden by CSS rules in File explorer. `@CALIBRE.Container.md` file contains an iframe to connect to the content server. You can change the server address in plugin settings.
+Calibre plugin will open a Obsidian view in your workspace when you click Calibre ribbon icon. The view contains an iframe to connect to the content server. You can change the server address in plugin settings.
 
 ## How to use
 
