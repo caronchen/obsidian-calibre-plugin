@@ -10,9 +10,6 @@ export interface CalibrePluginSettings {
 }
 
 const DEBOUNCE_TIMEOUT = 1000;
-export const SERVER_ADDRESS_CHANGED = 'server-address-changed';
-export const DISPLAY_TEXT_CHANGED = 'display-text-changed';
-export const SPLIT_DIRECTION_CHANGED = 'split-direction-changed';
 export const DEFAULT_SETTINGS: CalibrePluginSettings = {
 	address: "http://localhost:8080",
 	displayText: "CALIBRE",
@@ -40,7 +37,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.address)
 					.onChange(debounce(async (value) => {
 						this.plugin.settings.address = value;
-						await this.plugin.saveSettings(SERVER_ADDRESS_CHANGED);
+						this.plugin.saveData(this.plugin.settings);
 					}, DEBOUNCE_TIMEOUT));
 			});
 
@@ -54,7 +51,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.displayText)
 					.onChange(debounce(async (value) => {
 						this.plugin.settings.displayText = value;
-						await this.plugin.saveSettings(DISPLAY_TEXT_CHANGED);
+						this.plugin.saveData(this.plugin.settings);
 					}, DEBOUNCE_TIMEOUT));
 			});
 
@@ -66,7 +63,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.splitDirection)
 				.onChange(async (value: SplitDirection) => {
 					this.plugin.settings.splitDirection = value;
-					await this.plugin.saveSettings(SPLIT_DIRECTION_CHANGED);
+					this.plugin.saveData(this.plugin.settings);
 				}));
 
 		if (Platform.isDesktopApp) {

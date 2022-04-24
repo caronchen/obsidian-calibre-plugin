@@ -7,7 +7,8 @@ import {
 } from './settings';
 import {
 	CALIBRE_ICON_ID,
-	CALIBRE_ICON_SVG} from './tools';
+	CALIBRE_ICON_SVG
+} from './tools';
 
 export default class CalibrePlugin extends Plugin {
 	settings: CalibrePluginSettings;
@@ -44,12 +45,8 @@ export default class CalibrePlugin extends Plugin {
 		this.settings = Object.assign(DEFAULT_SETTINGS, await this.loadData());
 	}
 
-	async saveSettings(_type?: string) {
-		await this.saveData(this.settings);
-	}
-
 	async activateView(direction?: SplitDirection) {
-		await this.app.workspace.createLeafBySplit(this.app.workspace.activeLeaf, direction?? this.settings.splitDirection).setViewState({
+		await this.app.workspace.createLeafBySplit(this.app.workspace.activeLeaf, direction ?? this.settings.splitDirection).setViewState({
 			type: CALIBRE_VIEW_TYPE,
 			active: true,
 		});
