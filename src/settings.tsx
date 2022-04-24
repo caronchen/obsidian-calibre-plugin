@@ -1,20 +1,22 @@
-import { App, Platform, PluginSettingTab, Setting } from 'obsidian';
+import { App, debounce, Platform, PluginSettingTab, Setting, SplitDirection } from 'obsidian';
 import CalibrePlugin from './main';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 export interface CalibrePluginSettings {
-	address: string;
-	containerHeight: string;
-	autoContainerHeight: boolean;
+	address?: string;
+	displayText?: string;
+	splitDirection: SplitDirection;
 }
 
+const DEBOUNCE_TIMEOUT = 1000;
 export const SERVER_ADDRESS_CHANGED = 'server-address-changed';
-export const CONTAINER_HEIGHT_CHANGED = 'container-height-changed';
+export const DISPLAY_TEXT_CHANGED = 'display-text-changed';
+export const SPLIT_DIRECTION_CHANGED = 'split-direction-changed';
 export const DEFAULT_SETTINGS: CalibrePluginSettings = {
 	address: "http://localhost:8080",
-	containerHeight: "90%",
-	autoContainerHeight: true,
+	displayText: "CALIBRE",
+	splitDirection: "horizontal",
 }
 
 export class CalibreSettingTab extends PluginSettingTab {
@@ -36,36 +38,36 @@ export class CalibreSettingTab extends PluginSettingTab {
 				text
 					.setPlaceholder(DEFAULT_SETTINGS.address)
 					.setValue(this.plugin.settings.address)
-					.onChange(async (value) => {
+					.onChange(debounce(async (value) => {
 						this.plugin.settings.address = value;
 						await this.plugin.saveSettings(SERVER_ADDRESS_CHANGED);
-					});
+					}, DEBOUNCE_TIMEOUT));
 			});
 
 		new Setting(containerEl)
-			.setName("Auto Container Height")
-			.setDesc("When toggle on, Container Height will be ignored.")
-			.addToggle(toggle => {
-				toggle
-					.setValue(this.plugin.settings.autoContainerHeight)
-					.onChange(async (value) => {
-						this.plugin.settings.autoContainerHeight = value;
-						await this.plugin.saveSettings(CONTAINER_HEIGHT_CHANGED);
-					});
-			});
-
-		new Setting(containerEl)
-			.setName("Container Height")
-			.setDesc("Change default height of the container, percent or height with a valid CSS unit. e.g., 90%, 860px.")
+			.setName("View Display Text")
+			.setDesc("The title of calibre view.")
 			.addText(text => {
+				text.inputEl.size = 25;
 				text
-					.setPlaceholder(DEFAULT_SETTINGS.containerHeight)
-					.setValue(this.plugin.settings.containerHeight)
-					.onChange(async (value) => {
-						this.plugin.settings.containerHeight = value;
-						await this.plugin.saveSettings(CONTAINER_HEIGHT_CHANGED);
-					});
+					.setPlaceholder(DEFAULT_SETTINGS.displayText)
+					.setValue(this.plugin.settings.displayText)
+					.onChange(debounce(async (value) => {
+						this.plugin.settings.displayText = value;
+						await this.plugin.saveSettings(DISPLAY_TEXT_CHANGED);
+					}, DEBOUNCE_TIMEOUT));
 			});
+
+		new Setting(containerEl)
+			.setName("Split Direction")
+			.addDropdown(dropdown => dropdown
+				.addOption("horizontal", "Horizontal")
+				.addOption("vertical", "Vertical")
+				.setValue(this.plugin.settings.splitDirection)
+				.onChange(async (value: SplitDirection) => {
+					this.plugin.settings.splitDirection = value;
+					await this.plugin.saveSettings(SPLIT_DIRECTION_CHANGED);
+				}));
 
 		if (Platform.isDesktopApp) {
 			ReactDOM.render(
@@ -115,7 +117,7 @@ export class CalibreSettingTab extends PluginSettingTab {
 						</svg>
 					</a>
 				</>,
-				containerEl.createDiv({cls: "calibre-donation"})
+				containerEl.createDiv({ cls: "calibre-donation" })
 			);
 		}
 	}

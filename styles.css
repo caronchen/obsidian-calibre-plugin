@@ -12,21 +12,12 @@
 	display: inline-block;
 }
 
-.calibre-container {
-	position: relative;
+div.workspace-leaf-content[data-type=calibre-view] div.view-content {
 	overflow: hidden;
-	padding-top: 90%;
 }
 
-.calibre-container iframe {
-	position: absolute;
+div.workspace-leaf-content[data-type=calibre-view] iframe {
 	width: 100%;
 	height: 100%;
-	top: 0;
-	left: 0;
 	border: 0;
-}
-
-div.nav-file > div.nav-file-title[data-path="@CALIBRE.Container.md" i] {
-	display: none;
 }
