@@ -46,14 +46,13 @@ export default class CalibrePlugin extends Plugin {
 	}
 
 	async activateView(direction?: SplitDirection) {
-		await this.app.workspace.createLeafBySplit(this.app.workspace.activeLeaf, direction ?? this.settings.splitDirection).setViewState({
+		const leaf = this.app.workspace.splitActiveLeaf(direction ?? this.settings.splitDirection);
+		await leaf.setViewState({
 			type: CALIBRE_VIEW_TYPE,
 			active: true,
 		});
 
-		this.app.workspace.revealLeaf(
-			this.app.workspace.getLeavesOfType(CALIBRE_VIEW_TYPE)[0]
-		);
+		this.app.workspace.revealLeaf(leaf);
 	}
 
 	onunload() {

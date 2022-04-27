@@ -1,6 +1,4 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
 import { CalibrePluginSettings } from "./settings";
 
 export const CALIBRE_VIEW_TYPE = "calibre-view";
@@ -20,21 +18,15 @@ export class CalibreView extends ItemView {
 
   async onOpen() {
     const container = this.containerEl.children[1];
-		ReactDOM.unmountComponentAtNode(container);
-		try {
-			const props = this.settings;
-
-			ReactDOM.render(
-				<iframe src={props.address}></iframe>,
-				container
-			);
-		} catch (e) {
+    try {
+      const iframe = container.createEl('iframe');
+      iframe.setAttribute('sandbox', 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals');
+      iframe.src = this.settings.address;
+    } catch (e) {
       console.error(e);
-			ReactDOM.render(
-				<div style={{ color: 'var(--text-title-h1)' }}>{e.toString()}</div>,
-				container
-			);
-		}
+      const error = container.createDiv({ text: e.toString() });
+      error.style.color = 'var(--text-title-h1)';
+    }
   }
 
   async onClose() {
