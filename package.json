@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-calibre-plugin",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"description": "This plugin allows you to access your calibre libraries and read books directly in Obsidian.",
 	"main": "src/main.tsx",
 	"scripts": {

@@ -1,10 +1,13 @@
 import { App, debounce, Platform, PluginSettingTab, Setting, SplitDirection } from 'obsidian';
 import CalibrePlugin from './main';
+import { CALIBRE_ICON_ID } from './tools';
 
 export interface CalibrePluginSettings {
 	address?: string;
 	displayText?: string;
 	splitDirection: SplitDirection;
+	ribbonIcon: string;
+	hideRibbonIcon: boolean;
 }
 
 const DEBOUNCE_TIMEOUT = 1000;
@@ -12,6 +15,8 @@ export const DEFAULT_SETTINGS: CalibrePluginSettings = {
 	address: "http://localhost:8080",
 	displayText: "CALIBRE",
 	splitDirection: "horizontal",
+	ribbonIcon: CALIBRE_ICON_ID,
+	hideRibbonIcon: false,
 }
 
 export class CalibreSettingTab extends PluginSettingTab {
@@ -61,6 +66,25 @@ export class CalibreSettingTab extends PluginSettingTab {
 				.setValue(this.plugin.settings.splitDirection)
 				.onChange(async (value: SplitDirection) => {
 					this.plugin.settings.splitDirection = value;
+					this.plugin.saveData(this.plugin.settings);
+				}));
+
+		new Setting(containerEl)
+			.setName("Hide Ribbon Icon")
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.hideRibbonIcon)
+				.onChange(async value => {
+					this.plugin.settings.hideRibbonIcon = value;
+					this.plugin.saveData(this.plugin.settings);
+				}));
+
+		new Setting(containerEl)
+			.setName("Ribbon Icon")
+			.setDesc("The icon name to be used.")
+			.addText(text => text
+				.setValue(this.plugin.settings.ribbonIcon)
+				.onChange(async value => {
+					this.plugin.settings.ribbonIcon = value;
 					this.plugin.saveData(this.plugin.settings);
 				}));
 

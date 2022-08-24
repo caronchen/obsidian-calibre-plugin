@@ -21,9 +21,11 @@ export default class CalibrePlugin extends Plugin {
 
 			this.registerView(CALIBRE_VIEW_TYPE, (leaf) => new CalibreView(leaf, this.settings));
 
-			this.addRibbonIcon(CALIBRE_ICON_ID, 'Calibre', async () => {
-				this.activateView();
-			});
+			if (!this.settings.hideRibbonIcon) {
+				this.addRibbonIcon(this.settings.ribbonIcon, 'Calibre', async () => {
+					this.activateView();
+				});
+			}
 
 			this.addCommand({
 				id: 'calibre-open-horizontally',
