@@ -8,6 +8,7 @@ export interface CalibrePluginSettings {
 	splitDirection: SplitDirection;
 	ribbonIcon: string;
 	hideRibbonIcon: boolean;
+	replaceLocalIp: boolean;
 }
 
 const DEBOUNCE_TIMEOUT = 1000;
@@ -17,6 +18,7 @@ export const DEFAULT_SETTINGS: CalibrePluginSettings = {
 	splitDirection: "horizontal",
 	ribbonIcon: CALIBRE_ICON_ID,
 	hideRibbonIcon: false,
+	replaceLocalIp: true,
 }
 
 export class CalibreSettingTab extends PluginSettingTab {
@@ -43,6 +45,15 @@ export class CalibreSettingTab extends PluginSettingTab {
 						this.plugin.saveData(this.plugin.settings);
 					}, DEBOUNCE_TIMEOUT));
 			});
+
+		new Setting(containerEl)
+			.setName("Use the local IP address instead of 'localhost'")
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.replaceLocalIp)
+				.onChange(async value => {
+					this.plugin.settings.replaceLocalIp = value;
+					this.plugin.saveData(this.plugin.settings);
+				}));
 
 		new Setting(containerEl)
 			.setName("View Display Text")

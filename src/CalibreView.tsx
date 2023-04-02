@@ -1,5 +1,6 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
 import { CalibrePluginSettings } from "./settings";
+import * as ip from "ip";
 
 export const CALIBRE_VIEW_TYPE = "calibre-view";
 
@@ -21,7 +22,9 @@ export class CalibreView extends ItemView {
     try {
       const iframe = container.createEl('iframe');
       iframe.setAttribute('sandbox', 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals');
-      iframe.src = this.settings.address;
+      iframe.src = this.settings.replaceLocalIp
+        ? this.settings.address.replace('localhost', ip.address())
+        : this.settings.address;
     } catch (e) {
       console.error(e);
       const error = container.createDiv({ text: e.toString() });
