@@ -21,7 +21,7 @@ export class CalibreView extends ItemView {
     const container = this.containerEl.children[1];
     try {
       const iframe = container.createEl('iframe');
-      iframe.setAttribute('sandbox', 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals');
+      iframe.setAttribute('sandbox', 'allow-forms allow-presentation allow-same-origin allow-scripts allow-modals allow-downloads allow-popups');
       iframe.src = this.settings.replaceLocalIp
         ? this.settings.address.replace('localhost', ip.address())
         : this.settings.address;
